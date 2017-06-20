@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">News App</string>
+    <string name="search_results_default_message">Search Results</string>
+    <string name="error_message">Error</string>
+</resources>
