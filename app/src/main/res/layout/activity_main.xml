@@ -19,17 +19,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ScrollView
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_search_results"
-                android:text="@string/search_results_default_message" />
-
-        </ScrollView>
+            android:layout_height="match_parent"
+            android:id="@+id/rv_news_items"
+            android:background="#DDD"/>
 
         <TextView
             android:layout_width="match_parent"

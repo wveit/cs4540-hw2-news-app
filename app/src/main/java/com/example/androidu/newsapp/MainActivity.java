@@ -3,6 +3,8 @@ package com.example.androidu.newsapp;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,13 +16,16 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     EditText mSearchEditText;
-    TextView mResultsTextView;
+    RecyclerView mResultsRecyclerView;
     TextView mErrorMessageTextView;
     ProgressBar mProgressBar;
+
+    NewsItemRecyclerViewAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +33,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mSearchEditText = (EditText) findViewById(R.id.et_search_box);
-        mResultsTextView = (TextView) findViewById(R.id.tv_search_results);
+        mResultsRecyclerView = (RecyclerView) findViewById(R.id.rv_news_items);
         mErrorMessageTextView = (TextView) findViewById(R.id.tv_error_message);
         mProgressBar = (ProgressBar) findViewById(R.id.pb_progress_indicator);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        mResultsRecyclerView.setLayoutManager(layoutManager);
+
+        mAdapter = new NewsItemRecyclerViewAdapter();
+        mResultsRecyclerView.setAdapter(mAdapter);
+
     }
 
     @Override
@@ -64,12 +76,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void showErrorMessage(){
         mErrorMessageTextView.setVisibility(View.VISIBLE);
-        mResultsTextView.setVisibility(View.INVISIBLE);
+        mResultsRecyclerView.setVisibility(View.INVISIBLE);
     }
 
     private void showSearchResults(){
         mErrorMessageTextView.setVisibility(View.INVISIBLE);
-        mResultsTextView.setVisibility(View.VISIBLE);
+        mResultsRecyclerView.setVisibility(View.VISIBLE);
     }
 
     class NewsQueryTask extends AsyncTask<String, Void, String>{
@@ -111,7 +123,17 @@ public class MainActivity extends AppCompatActivity {
             }
             else{
                 showSearchResults();
-                mResultsTextView.setText(s);
+
+                ArrayList<NewsItem> itemList = new ArrayList<>();
+                boolean success = JsonUtils.parse(itemList, s);
+                if(success){
+                    mAdapter = new NewsItemRecyclerViewAdapter();
+                    mAdapter.setNewsItemList(itemList);
+                    mResultsRecyclerView.setAdapter(mAdapter);
+                    System.out.println(s);
+                    System.out.println("number news items: " + itemList.size());
+                }
+
             }
         }
     }
