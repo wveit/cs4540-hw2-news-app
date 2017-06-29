@@ -15,10 +15,14 @@ public class JsonUtils {
             for(int i = 0; i < articleArray.length(); i++){
                 System.out.println("looping");
                 JSONObject articleObject = articleArray.getJSONObject(i);
+                String author = articleObject.getString("author");
                 String title = articleObject.getString("title");
                 String description = articleObject.getString("description");
                 String url = articleObject.getString("url");
-                newsItemList.add(new NewsItem(title, description, url));
+                String imageUrl = articleObject.getString("urlToImage");
+                String date = articleObject.getString("publishedAt");
+
+                newsItemList.add(new NewsItem(author, title, description, url, imageUrl, date));
             }
 
             return true;

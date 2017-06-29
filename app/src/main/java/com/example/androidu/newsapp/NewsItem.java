@@ -1,43 +1,76 @@
 package com.example.androidu.newsapp;
 
 public class NewsItem {
-    private String title;
-    private String description;
-    private String url;
+    private String mAuthor;
+    private String mTitle;
+    private String mDescription;
+    private String mUrl;
+    private String mImageUrl;
+    private String mDate;
 
     public NewsItem(){
-        title = "";
-        description = "";
-        url = "";
+        mAuthor = "";
+        mTitle = "";
+        mDescription = "";
+        mUrl = "";
+        mImageUrl = "";
+        mDate = "";
     }
 
-    public NewsItem(String title, String description, String url){
-        this.title = title;
-        this.description = description;
-        this.url = url;
+    public NewsItem(String author, String title, String description, String url, String imageUrl, String date){
+        mAuthor = author;
+        mTitle = title;
+        mDescription = description;
+        mUrl = url;
+        mImageUrl = imageUrl;
+        mDate = date;
+    }
+
+    public String getAuthor() {
+        return mAuthor;
+    }
+
+    public void setAuthor(String author) {
+        mAuthor = author;
+    }
+
+    public String getImageUrl() {
+        return mImageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        mImageUrl = imageUrl;
+    }
+
+    public String getDate() {
+        return mDate;
+    }
+
+    public void setDate(String date) {
+        mDate = date;
     }
 
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        mTitle = title;
     }
 
     public String getDescription() {
-        return description;
+        return mDescription;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        mDescription = description;
     }
 
     public String getUrl() {
-        return url;
+        return mUrl;
     }
 
     public void setUrl(String url) {
-        this.url = url;
+        mUrl = url;
     }
 }

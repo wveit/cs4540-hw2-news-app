@@ -43,8 +43,7 @@ public class NewsItemRecyclerViewAdapter extends RecyclerView.Adapter<NewsItemRe
     @Override
     public void onBindViewHolder(NewsItemViewHolder holder, int position) {
         if(mNewsItemList != null){
-            NewsItem item = mNewsItemList.get(position);
-            holder.bind(item.getTitle(), item.getDescription(), item.getUrl());
+            holder.bind(mNewsItemList.get(position));
         }
     }
 
@@ -56,23 +55,22 @@ public class NewsItemRecyclerViewAdapter extends RecyclerView.Adapter<NewsItemRe
     public class NewsItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView mTitleTextView;
         TextView mDescriptionTextView;
-        TextView mUrlTextView;
+        TextView mDateTextView;
         String mUrlString;
 
         public NewsItemViewHolder(View itemView){
             super(itemView);
             mTitleTextView = (TextView) itemView.findViewById(R.id.tv_news_item_title);
             mDescriptionTextView = (TextView) itemView.findViewById(R.id.tv_news_item_description);
-            mUrlTextView = (TextView) itemView.findViewById(R.id.tv_news_item_url);
+            mDateTextView = (TextView) itemView.findViewById(R.id.tv_news_item_date);
         }
 
-        public void bind(String title, String description, String url){
-            mUrlString = url;
+        public void bind(NewsItem newsItem){
+            mUrlString = newsItem.getUrl();
 
-
-            mTitleTextView.setText("Title: " + title);
-            mDescriptionTextView.setText("Description: " + description);
-            mUrlTextView.setText("URL: " + url);
+            mTitleTextView.setText("Title: " + newsItem.getTitle());
+            mDescriptionTextView.setText("Description: " + newsItem.getDescription());
+            mDateTextView.setText("Date: " + newsItem.getDate());
         }
 
         @Override
