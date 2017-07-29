@@ -10,11 +10,6 @@
     tools:context="com.example.androidu.newsapp.MainActivity">
 
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/et_search_box" />
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

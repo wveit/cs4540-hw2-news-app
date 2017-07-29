@@ -4,28 +4,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.androidu.newsapp.database.MyDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class NewsItemRecyclerViewAdapter extends RecyclerView.Adapter<NewsItemRecyclerViewAdapter.NewsItemViewHolder> {
 
     private ArrayList<NewsItem> mNewsItemList = null;
+    private MyDatabase mDatabase;
 
-    public void setNewsItemList(ArrayList<NewsItem> newsItemList){
-        mNewsItemList = newsItemList;
+    public NewsItemRecyclerViewAdapter(MyDatabase db){
+        mDatabase = db;
     }
+
 
     @Override
     public int getItemCount() {
-        if(mNewsItemList == null)
-            return 0;
-        else
-            return mNewsItemList.size();
+        return mDatabase.getNumCursorRows();
     }
 
     @Override
@@ -42,9 +44,16 @@ public class NewsItemRecyclerViewAdapter extends RecyclerView.Adapter<NewsItemRe
 
     @Override
     public void onBindViewHolder(NewsItemViewHolder holder, int position) {
-        if(mNewsItemList != null){
-            holder.bind(mNewsItemList.get(position));
-        }
+        mDatabase.moveCursorToRow(position);
+        NewsItem item = new NewsItem(
+                mDatabase.getAuthor(),
+                mDatabase.getTitle(),
+                mDatabase.getDescription(),
+                mDatabase.getUrl(),
+                mDatabase.getImageUrl(),
+                mDatabase.getDate()
+        );
+        holder.bind(item);
     }
 
 
@@ -57,12 +66,14 @@ public class NewsItemRecyclerViewAdapter extends RecyclerView.Adapter<NewsItemRe
         TextView mDescriptionTextView;
         TextView mDateTextView;
         String mUrlString;
+        ImageView mImage;
 
         public NewsItemViewHolder(View itemView){
             super(itemView);
             mTitleTextView = (TextView) itemView.findViewById(R.id.tv_news_item_title);
             mDescriptionTextView = (TextView) itemView.findViewById(R.id.tv_news_item_description);
             mDateTextView = (TextView) itemView.findViewById(R.id.tv_news_item_date);
+            mImage = (ImageView) itemView.findViewById(R.id.iv_item_image);
         }
 
         public void bind(NewsItem newsItem){
@@ -71,6 +82,8 @@ public class NewsItemRecyclerViewAdapter extends RecyclerView.Adapter<NewsItemRe
             mTitleTextView.setText("Title: " + newsItem.getTitle());
             mDescriptionTextView.setText("Description: " + newsItem.getDescription());
             mDateTextView.setText("Date: " + newsItem.getDate());
+
+            Picasso.with(itemView.getContext()).load(newsItem.getImageUrl()).into(mImage);
         }
 
         @Override

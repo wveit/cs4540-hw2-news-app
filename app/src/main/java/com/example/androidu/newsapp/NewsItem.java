@@ -1,3 +1,16 @@
+/*
+
+    This class is a simple model class to represent a NewsItem. It has getters and setters for
+        each NewsItem's:
+
+        * Author
+        * Title
+        * Description
+        * Url
+        * ImageUrl
+        * Date
+ */
+
 package com.example.androidu.newsapp;
 
 public class NewsItem {
